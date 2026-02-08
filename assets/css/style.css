@@ -1544,3 +1544,33 @@ img {
   from, to { border-color: transparent; }
   50% { border-color: var(--accent-primary); }
 }
+
+
+/* Hero Social Links */
+.hero-socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #555;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.hero-socials a:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
