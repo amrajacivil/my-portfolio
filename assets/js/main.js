@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (menuToggle && nav) {
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('active');
-      nav.classList.toggle('open');
-      document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+      nav.classList.toggle('active');
+      document.body.classList.toggle('menu-open');
     });
 
-    // Close menu when clicking a nav link
+    // Close menu when a nav link is clicked
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         menuToggle.classList.remove('active');
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
+        nav.classList.remove('active');
+        document.body.classList.remove('menu-open');
       });
     });
   }
