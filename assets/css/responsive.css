@@ -21,6 +21,7 @@
   .hero-image-wrapper {
     width: 300px;
     height: 350px;
+    overflow: hidden;
   }
 
   .hero-description {
@@ -138,16 +139,17 @@
   }
 
   .hero-floating-card {
-    padding: 10px 14px;
-    font-size: 0.7rem;
+    display: none;
   }
 
-  .hero-floating-card .card-icon {
-    font-size: 1.2rem;
+  .hero-avatar-icon {
+    font-size: 4rem;
   }
 
-  .hero-floating-card .card-value {
-    font-size: 0.8rem;
+  .hero-image-wrapper {
+    width: 250px;
+    height: 280px;
+    overflow: hidden;
   }
 
   /* Timeline mobile */
@@ -193,8 +195,12 @@
   }
 
   .hero-image-wrapper {
-    width: 250px;
-    height: 300px;
+    width: 200px;
+    height: 240px;
+  }
+
+  .hero-avatar-icon {
+    font-size: 3.5rem;
   }
 
   .section-title {
