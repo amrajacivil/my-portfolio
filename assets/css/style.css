@@ -1574,3 +1574,62 @@ img {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
+
+// ...existing code...
+
+/* ========================================
+   AWARDS & ACCREDITATIONS SECTION
+   ======================================== */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.award-card {
+  display: flex;
+  gap: 20px;
+  padding: 28px;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.award-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.award-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.award-content h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.award-org {
+  font-size: 0.95rem;
+  color: var(--accent-color, #6366f1);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.award-year {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #666);
+  margin-bottom: 10px;
+}
+
+.award-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+  line-height: 1.6;
+}
+
+// ...existing code...
