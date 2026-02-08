@@ -1,5 +1,7 @@
 # Arumugam Maharaja — Portfolio Website
 
+This repository contains the source code of my personal portfolio website, hosted on GitHub Pages and pointed to my custom domain.
+
 A static portfolio website for Arumugam Maharaja — experienced Python and Go backend developer with cloud & AI focus.
 
 ## 📁 Project Structure
@@ -23,6 +25,13 @@ my-portfolio/
 ├── index.html                 # Main portfolio page
 └── README.md
 ```
+
+## 🌐 Deployment
+
+This site is deployed using **GitHub Pages** and connected to a custom domain.
+
+- **Hosting:** GitHub Pages
+- **Custom Domain:** Configured via repository settings and DNS records
 
 ## 🚀 Getting Started
 
@@ -68,5 +77,6 @@ Then open `http://localhost:8000` in your browser.
 3. Add a card in the blog section of `index.html`
 
 ## 📄 License
+- MIT
 
-© 2025 Arumugam Maharaja. All rights reserved.
+© 2026 Arumugam Maharaja. All rights reserved.
