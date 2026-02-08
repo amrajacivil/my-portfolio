@@ -1631,3 +1631,96 @@ img {
   line-height: 1.6;
 }
 
+/* ========================================
+   CSS VARIABLES / THEME
+   ======================================== */
+
+/* ========================================
+   AI BADGE / VIBE CODING NOTE
+   ======================================== */
+.ai-badge {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  cursor: default;
+}
+
+.ai-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-primary);
+}
+
+.ai-badge-icon {
+  font-size: 1rem;
+}
+
+.ai-badge-text {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.ai-badge-text strong {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+/* Tooltip for more details */
+.ai-badge::after {
+  content: 'Built using AI-assisted development & prompt engineering';
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  padding: 10px 14px;
+  background: var(--text-primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: var(--transition);
+  pointer-events: none;
+}
+
+.ai-badge:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ai-badge {
+    top: auto;
+    bottom: 80px;
+    right: 16px;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+  
+  .ai-badge::after {
+    right: auto;
+    left: 0;
+    white-space: normal;
+    width: 200px;
+  }
+}
+
+
