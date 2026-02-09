@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How graph databases like Neo4j can transform the way we model and query complex relationships in oil & gas datasets.">
+  <meta name="description" content="Building a graph database using the Factpages dataset from Norwegian Offshore Directorate to model and uncover relationships in oil & gas data with Neo4j.">
   <meta name="author" content="Arumugam Maharaja">
   <title>Unlocking Relationships in Oil & Gas Data with Graph Databases – Arumugam Maharaja</title>
 
@@ -17,6 +17,147 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+
+  <style>
+    /* Blog-post-specific enhancements */
+    .blog-post-content .highlight-box {
+      background: linear-gradient(135deg, var(--accent-light, #fff8e1), #fffdf5);
+      border: 1px solid var(--accent-primary, #e6a817);
+      border-radius: var(--radius-md, 12px);
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .blog-post-content .highlight-box h3 {
+      margin-top: 0;
+      color: var(--accent-primary, #e6a817);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .highlight-box ul {
+      margin-bottom: 0;
+    }
+    .blog-post-content .node-relationship-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .blog-post-content .node-relationship-grid .grid-card {
+      background: var(--bg-secondary, #f9f9f5);
+      border: 1px solid var(--border-color, #e8e4d9);
+      border-radius: var(--radius-md, 12px);
+      padding: 20px 24px;
+    }
+    .blog-post-content .node-relationship-grid .grid-card h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-primary, #e6a817);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .blog-post-content .node-relationship-grid .grid-card code {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      font-size: 0.82rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .blog-post-content .hierarchy-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 20px 0 28px;
+      padding: 20px;
+      background: var(--bg-secondary, #f9f9f5);
+      border-radius: var(--radius-md, 12px);
+      border: 1px solid var(--border-color, #e8e4d9);
+    }
+    .blog-post-content .hierarchy-flow .flow-node {
+      background: var(--accent-gradient);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .blog-post-content .hierarchy-flow .flow-arrow {
+      color: var(--text-muted, #7a7a7a);
+      font-size: 1.1rem;
+    }
+    .blog-post-content .inline-image {
+      margin: 32px 0;
+      border-radius: var(--radius-md, 12px);
+      overflow: hidden;
+      border: 1px solid var(--border-color, #e8e4d9);
+      box-shadow: var(--shadow-md);
+    }
+    .blog-post-content .inline-image img {
+      width: 100%;
+      display: block;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+    }
+    .blog-post-content .inline-image figcaption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted, #7a7a7a);
+      padding: 10px 16px;
+      background: var(--bg-secondary, #f9f9f5);
+    }
+    .blog-post-content .cta-box {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      border-radius: var(--radius-md, 12px);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .blog-post-content .cta-box p {
+      color: #ccc;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .cta-box a {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+    .blog-post-content .cta-box a:hover {
+      opacity: 0.9;
+      color: #fff;
+    }
+    .blog-post-content .why-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .blog-post-content .why-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .why-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary, #e6a817);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    @media (max-width: 600px) {
+      .blog-post-content .node-relationship-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -63,189 +204,125 @@
             <span>Arumugam Maharaja</span>
           </div>
           <span>📅 May 2025</span>
-          <span>⏱️ 12 min read</span>
+          <span>⏱️ 8 min read</span>
         </div>
       </div>
 
       <!-- Featured Image -->
       <div class="blog-post-featured-image fade-in">
-        <img src="https://amraja.in/wp-content/uploads/2025/05/graph-database-oil-gas.webp" alt="Graph Database visualization for Oil and Gas data" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'; this.parentElement.style.height='400px'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.innerHTML='<div style=&quot;font-size:5rem;&quot;>🔗</div>'">
+        <img src="../../src/images/oil_and_gas_graph.png" alt="Graph Database visualization for Oil and Gas data">
       </div>
 
       <!-- Post Content -->
       <article class="blog-post-content fade-in">
 
-        <p>The oil and gas industry generates massive volumes of interconnected data — from geological surveys and well logs to equipment maintenance records and supply chain logistics. Traditional relational databases struggle to efficiently model and query these complex, many-to-many relationships. This is where <strong>graph databases</strong> shine.</p>
+        <p>In the oil and gas sector, data is vast, complex, and highly interconnected. From exploration to production, every well, license, and facility carries relationships that often get buried inside traditional tabular systems.</p>
 
-        <h2>The Challenge: Complex Relationships in Oil & Gas</h2>
-
-        <p>In a typical oil and gas operation, you're dealing with a web of interconnected entities:</p>
-
-        <ul>
-          <li><strong>Wells</strong> connected to <strong>reservoirs</strong>, which are part of <strong>fields</strong>, managed by <strong>operators</strong></li>
-          <li><strong>Equipment</strong> installed at <strong>facilities</strong>, requiring <strong>maintenance schedules</strong> from <strong>vendors</strong></li>
-          <li><strong>Pipelines</strong> connecting <strong>production sites</strong> to <strong>processing plants</strong> to <strong>distribution networks</strong></li>
-          <li><strong>Regulatory documents</strong> linked to <strong>permits</strong>, <strong>inspections</strong>, and <strong>compliance requirements</strong></li>
-        </ul>
-
-        <p>In a relational database, querying these multi-hop relationships requires complex JOIN operations across many tables. As the depth of relationships increases, query performance degrades exponentially — a problem known as the <strong>"JOIN bomb"</strong>.</p>
+        <p>Recently, I worked on building a graph database using the <strong>Factpages dataset</strong> (official public data from Norwegian Offshore Directorate). The goal was to model how different entities in oil and gas relate to each other and uncover insights that would otherwise remain hidden.</p>
 
         <h2>Why Graph Databases?</h2>
 
-        <p>Graph databases like <strong>Neo4j</strong> store data as nodes (entities) and edges (relationships), making them naturally suited for highly connected data. Instead of expensive JOIN operations, graph databases traverse relationships directly, providing constant-time performance regardless of the dataset size.</p>
+        <p>Traditional relational databases are great for structured records, but when it comes to exploring connections—for example, <em>which operator managed a specific wellbore drilled from a facility in a given license area?</em> — queries become complex and inefficient.</p>
 
-        <h3>Key Advantages for Oil & Gas</h3>
+        <p>Graph databases like <strong>Neo4j</strong> are designed for this very challenge. They allow us to model, store, and query relationships directly, making it easier to:</p>
 
-        <ol>
-          <li><strong>Natural Data Modeling:</strong> Graph models mirror the real-world relationships in oil & gas operations, making them intuitive to design and understand.</li>
-          <li><strong>Fast Traversals:</strong> Queries that explore multi-hop relationships — like "find all equipment connected to wells that had maintenance issues in the last year" — execute in milliseconds.</li>
-          <li><strong>Flexible Schema:</strong> As new data sources and relationships emerge, the graph model can evolve without costly schema migrations.</li>
-          <li><strong>Pattern Detection:</strong> Graph algorithms can detect patterns like anomalous equipment failure chains, supply chain bottlenecks, or compliance gaps.</li>
-        </ol>
+        <ul>
+          <li>Visualize hierarchies between Areas, Licenses, Fields, and Wells.</li>
+          <li>Identify operational dependencies and potential bottlenecks.</li>
+          <li>Enable faster decision-making by showing a connected picture of the ecosystem.</li>
+        </ul>
 
-        <h2>Modeling Oil & Gas Data as a Graph</h2>
+        <h2>The Model I Built</h2>
 
-        <p>Let's look at how we might model a simplified oil & gas dataset in Neo4j:</p>
+        <p>Using Neo4j Community Edition, I created nodes and relationships representing key oil and gas concepts:</p>
 
-        <pre><code>// Create nodes
-CREATE (field:Field {name: 'Permian Basin', location: 'Texas'})
-CREATE (well1:Well {name: 'Well-A1', depth: 8500, status: 'Active'})
-CREATE (well2:Well {name: 'Well-B2', depth: 9200, status: 'Active'})
-CREATE (reservoir:Reservoir {name: 'Delaware Basin', type: 'Shale'})
-CREATE (pump:Equipment {name: 'ESP-001', type: 'Electric Submersible Pump'})
-CREATE (compressor:Equipment {name: 'COMP-003', type: 'Gas Compressor'})
+        <div class="node-relationship-grid">
+          <div class="grid-card">
+            <h4>Nodes</h4>
+            <code>Area</code> <code>License</code> <code>Field</code> <code>Discovery</code> <code>Well</code> <code>Wellbore</code> <code>Drilling Facility</code> <code>Facility Type</code> <code>Operator</code> <code>Base</code>
+          </div>
+          <div class="grid-card">
+            <h4>Relationships</h4>
+            <code>HAS_LICENSE</code> <code>HAS_FIELD</code> <code>HAS_DISCOVERY</code> <code>HAS_WELLBORE</code> <code>WAS_OPERATED_BY</code> <code>MANAGES</code> <code>HAS_SUPPLYBASE_OF</code> <code>and more…</code>
+          </div>
+        </div>
 
-// Create relationships
-CREATE (well1)-[:LOCATED_IN]->(field)
-CREATE (well2)-[:LOCATED_IN]->(field)
-CREATE (well1)-[:TAPS_INTO]->(reservoir)
-CREATE (well2)-[:TAPS_INTO]->(reservoir)
-CREATE (pump)-[:INSTALLED_AT]->(well1)
-CREATE (compressor)-[:INSTALLED_AT]->(well2)</code></pre>
+        <p>This model mirrors the real-world hierarchy:</p>
 
-        <h3>Querying Relationships</h3>
+        <div class="hierarchy-flow">
+          <span class="flow-node">Area</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">License</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Field</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Discovery</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Well</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Wellbore</span>
+        </div>
 
-        <p>With this graph model, complex queries become straightforward. For example, to find all equipment installed at wells tapping into a specific reservoir:</p>
+        <ul>
+          <li>An <strong>Area</strong> contains <strong>Licenses</strong></li>
+          <li>A <strong>License</strong> has <strong>Fields</strong></li>
+          <li>A <strong>Field</strong> may have <strong>Discoveries</strong> and is <strong>Managed by Operators</strong></li>
+          <li><strong>Wells</strong> and <strong>Wellbores</strong> are tied to <strong>Facilities</strong> and <strong>Bases</strong></li>
+        </ul>
 
-        <pre><code>MATCH (e:Equipment)-[:INSTALLED_AT]->(w:Well)-[:TAPS_INTO]->(r:Reservoir)
-WHERE r.name = 'Delaware Basin'
-RETURN e.name AS Equipment, e.type AS Type, w.name AS Well</code></pre>
+        <p>Instead of looking at isolated spreadsheets, the entire ecosystem becomes a living map of connections.</p>
 
-        <p>This query traverses from Equipment → Well → Reservoir in a single, readable statement. In a relational database, this would require multiple JOINs across separate tables.</p>
+        <!-- Second image placed contextually -->
+        <figure class="inline-image">
+          <img src="../../src/images/north_sea_oil_gas_graph.png" alt="North Sea Oil & Gas Graph Database Model">
+          <figcaption>Graph visualization of the North Sea oil &amp; gas data model in Neo4j</figcaption>
+        </figure>
 
-        <h2>Real-World Use Cases</h2>
+        <h2>Why Neo4j?</h2>
 
-        <h3>1. Asset Hierarchy & Tracking</h3>
+        <p>I specifically chose Neo4j for this project because:</p>
 
-        <p>Oil & gas companies manage thousands of assets across multiple facilities. A graph database provides an intuitive way to model asset hierarchies — from fields down to individual sensors — enabling quick lookups and impact analysis when equipment fails.</p>
+        <ul class="why-list">
+          
+          <li><strong>Ease of use</strong> – Cypher query language is intuitive.</li>
+          <li><strong>Visualization tools</strong> – Neo4j Bloom makes it simple to present relationships interactively.</li>
+          <li><strong>Integration capabilities</strong> – From RAG (Retrieval Augmented Generation) to APIs, Neo4j fits modern AI-driven workflows.</li>
+          <li><strong>Community edition</strong> – Free to experiment with, yet powerful enough for real projects.</li>
+          <li>I am <strong>certified in Neo4j</strong>, which gave me confidence in modeling and querying.</li>
+        </ul>
 
-        <h3>2. Supply Chain Optimization</h3>
+        <p>Other graph databases exist, but Neo4j's maturity and ecosystem made it a natural fit.</p>
 
-        <p>By modeling suppliers, parts, facilities, and transportation routes as a graph, companies can quickly identify supply chain vulnerabilities, find alternative suppliers, and optimize logistics.</p>
+        <h2>Benefits for Oil & Gas Operators</h2>
 
-        <h3>3. Regulatory Compliance</h3>
+        <p>By adopting graph databases, operators can:</p>
 
-        <p>Graph databases excel at tracking the complex web of regulatory requirements, permits, inspections, and compliance documents. Queries like "show all wells that have an overdue safety inspection linked to a specific regulation" become trivial.</p>
+        <div class="highlight-box">
+          <h3>Key Benefits</h3>
+          <ul>
+            <li>Gain a <strong>single connected view</strong> of licenses, fields, wells, and facilities.</li>
+            <li>Quickly <strong>identify dependencies</strong> and optimize operational decisions.</li>
+            <li>Support <strong>regulatory reporting</strong> with traceable relationships.</li>
+            <li>Enable <strong>knowledge graphs</strong> that power AI applications in exploration and production.</li>
+          </ul>
+        </div>
 
-        <h3>4. Predictive Maintenance</h3>
+        <h2>Try It Yourself</h2>
 
-        <p>By connecting equipment, maintenance records, sensor data, and failure histories in a graph, teams can use graph algorithms to identify failure patterns and predict which equipment is likely to fail next.</p>
+        <div class="cta-box">
+          <p>This project is available on GitHub. Anyone with Docker can set it up — I've included a detailed README with step-by-step instructions.</p>
+          <a href="https://github.com/amrajacivil/graph-upstream-ns" target="_blank" rel="noopener noreferrer">🔗 View on GitHub</a>
+        </div>
 
-        <h2>Implementation Architecture</h2>
+        <h2>Why I Did This Project</h2>
 
-        <p>Here's a high-level architecture for implementing a graph database solution in an oil & gas context:</p>
+        <p>At its core, this project reflects my passion and career direction:</p>
 
-        <ol>
-          <li><strong>Data Ingestion Layer:</strong> Use Apache Kafka or AWS Kinesis to stream data from various sources (SCADA systems, IoT sensors, ERP systems).</li>
-          <li><strong>ETL Pipeline:</strong> Python-based ETL using Apache Airflow to transform and load data into Neo4j.</li>
-          <li><strong>Graph Database:</strong> Neo4j as the primary graph store, with full-text search via Elasticsearch for complementary querying.</li>
-          <li><strong>API Layer:</strong> FastAPI-based REST/GraphQL API for application access.</li>
-          <li><strong>Visualization:</strong> Neo4j Bloom or custom D3.js dashboards for relationship visualization.</li>
-        </ol>
-
-        <pre><code># Python example: Loading data into Neo4j using the official driver
-from neo4j import GraphDatabase
-
-class OilGasGraph:
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
-
-    def close(self):
-        self.driver.close()
-
-    def create_well(self, name, depth, field_name):
-        with self.driver.session() as session:
-            session.execute_write(
-                self._create_well_tx, name, depth, field_name
-            )
-
-    @staticmethod
-    def _create_well_tx(tx, name, depth, field_name):
-        tx.run(
-            """
-            MERGE (f:Field {name: $field_name})
-            CREATE (w:Well {name: $name, depth: $depth})
-            CREATE (w)-[:LOCATED_IN]->(f)
-            """,
-            name=name, depth=depth, field_name=field_name
-        )
-
-# Usage
-graph = OilGasGraph("bolt://localhost:7687", "neo4j", "password")
-graph.create_well("Well-C3", 7800, "Permian Basin")
-graph.close()</code></pre>
-
-        <h2>Performance Comparison</h2>
-
-        <p>To illustrate the performance advantage, consider a query that finds all equipment within 4 degrees of separation from a specific asset:</p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Database</th>
-              <th>Depth 2</th>
-              <th>Depth 3</th>
-              <th>Depth 4</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Relational (PostgreSQL)</td>
-              <td>150ms</td>
-              <td>2.5s</td>
-              <td>45s+</td>
-            </tr>
-            <tr>
-              <td>Graph (Neo4j)</td>
-              <td>2ms</td>
-              <td>5ms</td>
-              <td>12ms</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p>As the traversal depth increases, the graph database maintains near-constant performance, while the relational database struggles with exponentially growing JOIN operations.</p>
-
-        <h2>Getting Started</h2>
-
-        <p>If you're considering graph databases for your oil & gas data:</p>
-
-        <ol>
-          <li><strong>Start Small:</strong> Pick a specific use case — like asset hierarchy or supply chain — rather than trying to model everything at once.</li>
-          <li><strong>Model First:</strong> Spend time on data modeling. Use whiteboard sessions to identify your key entities and relationships.</li>
-          <li><strong>Hybrid Approach:</strong> Graph databases complement, not replace, your existing relational databases. Use them for relationship-heavy queries while keeping transactional data in PostgreSQL.</li>
-          <li><strong>Invest in Tooling:</strong> Neo4j Bloom, GraphQL integrations, and Python/Go drivers make development and visualization much smoother.</li>
-        </ol>
-
-        <h2>Conclusion</h2>
-
-        <p>Graph databases offer a powerful paradigm shift for modeling and querying the complex, interconnected data found in oil & gas operations. By representing assets, equipment, facilities, and their relationships as a graph, organizations can unlock insights that are simply impractical with traditional relational approaches.</p>
-
-        <p>Whether you're tracking asset hierarchies, optimizing supply chains, ensuring regulatory compliance, or implementing predictive maintenance — graph databases provide the performance, flexibility, and intuitiveness needed to make sense of your most complex data relationships.</p>
-
-        <blockquote>
-          The future of data in oil & gas isn't just about storing more — it's about understanding the connections between what we already have.
-        </blockquote>
+        <ul>
+          <li>I genuinely enjoy working with data—wrangling, modeling, and finding patterns.</li>
+          <li>It helps me increase my <strong>domain knowledge in oil and gas</strong>.</li>
+          <li>It becomes part of my <strong>resume portfolio</strong>, strengthening my profile for future opportunities in data engineering and energy domain projects.</li>
+        </ul>
 
         <hr>
 
@@ -260,9 +337,9 @@ graph.close()</code></pre>
           <span class="skill-tag">Neo4j</span>
           <span class="skill-tag">Graph Databases</span>
           <span class="skill-tag">Oil & Gas</span>
-          <span class="skill-tag">Python</span>
           <span class="skill-tag">Data Engineering</span>
-          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Norwegian Offshore</span>
+          <span class="skill-tag">Docker</span>
         </div>
 
         <div class="blog-post-nav">
