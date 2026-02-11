@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Building a Restaurant Manager as a Service (RMaaS) - A lightweight Golang microservice for menu management, order tracking, and MongoDB persistence with clean architecture.">
+  <meta name="author" content="Arumugam Maharaja">
+  <title>Restaurant Manager as a Service (RMaaS) – Golang Microservice Implementation – Arumugam Maharaja</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/blog.css">
+  <link rel="stylesheet" href="../../assets/css/responsive.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+
+  <style>
+    /* Blog-post-specific enhancements */
+    .blog-post-content .highlight-box {
+      background: linear-gradient(135deg, var(--accent-light, #fff8e1), #fffdf5);
+      border: 1px solid var(--accent-primary, #e6a817);
+      border-radius: var(--radius-md, 12px);
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .blog-post-content .highlight-box h3 {
+      margin-top: 0;
+      color: var(--accent-primary, #e6a817);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .highlight-box ul {
+      margin-bottom: 0;
+    }
+    .blog-post-content .tech-stack-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .blog-post-content .tech-stack-grid .stack-card {
+      background: var(--bg-secondary, #f9f9f5);
+      border: 1px solid var(--border-color, #e8e4d9);
+      border-radius: var(--radius-md, 12px);
+      padding: 16px 20px;
+    }
+    .blog-post-content .tech-stack-grid .stack-card h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted, #7a7a7a);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .blog-post-content .tech-stack-grid .stack-card p {
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin: 0;
+      font-weight: 600;
+    }
+    .blog-post-content .architecture-flow {
+      background: var(--bg-secondary, #f9f9f5);
+      border-radius: var(--radius-md, 12px);
+      border: 1px solid var(--border-color, #e8e4d9);
+      padding: 24px;
+      margin: 28px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+    }
+    .blog-post-content .architecture-flow pre {
+      margin: 0;
+      white-space: pre;
+      line-height: 1.6;
+    }
+    .blog-post-content .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: var(--radius-md, 12px);
+      padding: 20px 24px;
+      margin: 24px 0;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .blog-post-content .code-block .code-comment {
+      color: #6a9955;
+    }
+    .blog-post-content .code-block .code-string {
+      color: #ce9178;
+    }
+    .blog-post-content .code-block .code-number {
+      color: #b5cea8;
+    }
+    .blog-post-content .code-block .code-key {
+      color: #9cdcfe;
+    }
+    .blog-post-content .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 28px 0;
+    }
+    .blog-post-content .feature-card {
+      background: var(--bg-secondary, #f9f9f5);
+      border: 1px solid var(--border-color, #e8e4d9);
+      border-radius: var(--radius-md, 12px);
+      padding: 20px 24px;
+    }
+    .blog-post-content .feature-card h3 {
+      color: var(--accent-primary, #e6a817);
+      font-size: 1.1rem;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .feature-card code {
+      background: #1e1e1e;
+      color: #4ec9b0;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .blog-post-content .cta-box {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      border-radius: var(--radius-md, 12px);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .blog-post-content .cta-box p {
+      color: #ccc;
+      margin-bottom: 12px;
+    }
+    .blog-post-content .cta-box a {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+    .blog-post-content .cta-box a:hover {
+      opacity: 0.9;
+      color: #fff;
+    }
+    .blog-post-content .folder-structure {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: var(--radius-md, 12px);
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .blog-post-content .folder-structure .folder {
+      color: #4ec9b0;
+    }
+    .blog-post-content .folder-structure .file {
+      color: #9cdcfe;
+    }
+    @media (max-width: 600px) {
+      .blog-post-content .tech-stack-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="logo">
+        <div class="logo-icon">AM</div>
+        <span>Arumugam Maharaja</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav">
+        <a href="../../index.html#about">About</a>
+        <a href="../../index.html#skills">Skills</a>
+        <a href="../../index.html#experience">Experience</a>
+        <a href="../../index.html#projects">Projects</a>
+        <a href="../../index.html#blog">Blog</a>
+        <a href="../../index.html#contact" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================
+       BLOG POST
+       ======================================== -->
+  <main class="blog-post-page">
+    <div class="container">
+
+      <!-- Post Header -->
+      <div class="blog-post-header fade-in">
+        <span class="blog-card-tag">Backend Development</span>
+        <h1>Restaurant Manager as a Service (RMaaS) – Golang Microservice Implementation</h1>
+        <div class="blog-post-meta">
+          <div class="author">
+            <div class="author-avatar">AM</div>
+            <span>Arumugam Maharaja</span>
+          </div>
+          <span>📅 February 2026</span>
+          <span>⏱️ 7 min read</span>
+        </div>
+      </div>
+
+      <!-- Post Content -->
+      <article class="blog-post-content fade-in">
+
+        <h2>Introduction</h2>
+
+        <p>Modern restaurants increasingly rely on digital ordering and management systems to streamline operations, reduce manual errors, and enhance customer experience.</p>
+
+        <p>To explore this space, I built <strong>Restaurant Manager as a Service (RMaaS)</strong> — a lightweight backend service written in Golang, exposing REST APIs for:</p>
+
+        <ul>
+          <li><strong>Menu management</strong></li>
+          <li><strong>Order creation & tracking</strong></li>
+          <li><strong>MongoDB persistence</strong> (local or cloud)</li>
+        </ul>
+
+        <p>The goal of RMaaS is to provide a simple, modular, and scalable backend foundation that can later integrate with:</p>
+
+        <ul>
+          <li>Payment gateways</li>
+          <li>Inventory systems</li>
+          <li>Kitchen display systems</li>
+          <li>Analytics dashboards</li>
+        </ul>
+
+        <h2>Tech Stack</h2>
+
+        <div class="tech-stack-grid">
+          <div class="stack-card">
+            <h4>Language</h4>
+            <p>Golang</p>
+          </div>
+          <div class="stack-card">
+            <h4>Architecture</h4>
+            <p>Layered Service Architecture</p>
+          </div>
+          <div class="stack-card">
+            <h4>Database</h4>
+            <p>MongoDB (local / MongoDB Atlas)</p>
+          </div>
+          <div class="stack-card">
+            <h4>API Testing</h4>
+            <p>Postman Collection</p>
+          </div>
+          <div class="stack-card">
+            <h4>Communication</h4>
+            <p>REST APIs (JSON)</p>
+          </div>
+        </div>
+
+        <h2>Repository Structure Overview</h2>
+
+        <p>The project follows a <strong>clean layered architecture</strong>:</p>
+
+        <div class="folder-structure">
+<span class="folder">RMaaS/</span>
+├── <span class="folder">api/</span>                    <span class="code-comment"># Postman collection for testing</span>
+├── <span class="folder">db/</span>                     <span class="code-comment"># MongoDB connection setup</span>
+├── <span class="folder">domain/</span>                 <span class="code-comment"># Core business entities</span>
+│   ├── <span class="file">menu.go</span>
+│   ├── <span class="file">order.go</span>
+│   ├── <span class="file">payment.go</span>
+│   └── <span class="file">error.go</span>
+├── <span class="folder">endpoints/</span>              <span class="code-comment"># Service & Handler layers</span>
+│   ├── <span class="folder">menu/</span>
+│   │   ├── <span class="file">handler.go</span>        <span class="code-comment"># HTTP request/response handling</span>
+│   │   └── <span class="file">service.go</span>        <span class="code-comment"># Business logic</span>
+│   ├── <span class="folder">orders/</span>
+│   │   ├── <span class="file">handler.go</span>
+│   │   └── <span class="file">service.go</span>
+│   └── <span class="folder">payment/</span>
+│       ├── <span class="file">handler.go</span>
+│       └── <span class="file">service.go</span>
+├── <span class="folder">routes/</span>                 <span class="code-comment"># API endpoint registration</span>
+└── <span class="file">main.go</span>                   <span class="code-comment"># Application entry point</span>
+        </div>
+
+        <h3>1. API Layer</h3>
+        <ul>
+          <li>Contains Postman collection for testing endpoints.</li>
+          <li>Helps developers quickly validate service behavior.</li>
+        </ul>
+
+        <h3>2. Database Layer (db)</h3>
+        <ul>
+          <li>MongoDB connection setup.</li>
+          <li>Handles database initialization and configuration.</li>
+        </ul>
+
+        <h3>3. Domain Models (domain)</h3>
+        <p>Defines core business entities:</p>
+        <ul>
+          <li><code>Menu</code></li>
+          <li><code>Order</code></li>
+          <li><code>Payment</code></li>
+          <li>Error handling</li>
+        </ul>
+        <p>This layer keeps business structures independent of transport or database logic.</p>
+
+        <h3>4. Service & Handler Layers (endpoints)</h3>
+        <p>Each module (Menu, Orders, Payment) contains:</p>
+        <ul>
+          <li><code>handler.go</code> → HTTP request/response handling</li>
+          <li><code>service.go</code> → Business logic implementation</li>
+        </ul>
+        <p>This separation ensures:</p>
+        <ul>
+          <li>Clean code</li>
+          <li>Easy testing</li>
+          <li>Future scalability</li>
+        </ul>
+
+        <h3>5. Routing Layer (routes)</h3>
+        <ul>
+          <li>Central place to register all API endpoints.</li>
+          <li>Connects HTTP paths to handlers.</li>
+        </ul>
+
+        <h3>6. Entry Point (main.go)</h3>
+        <ul>
+          <li>Initializes database connection</li>
+          <li>Registers routes</li>
+          <li>Starts HTTP server</li>
+        </ul>
+
+        <h2>Core Features</h2>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>Menu Service</h3>
+            <p><strong>Purpose:</strong> Expose available restaurant items to clients.</p>
+            <p><strong>Endpoint:</strong> <code>GET /menu</code></p>
+            <p><strong>Behavior:</strong></p>
+            <ul>
+              <li>Fetch menu list from MongoDB</li>
+              <li>Return JSON response with available items</li>
+            </ul>
+            <p><strong>Used by:</strong></p>
+            <ul>
+              <li>Customer ordering apps</li>
+              <li>Admin dashboards</li>
+              <li>POS systems</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h3>Order Service</h3>
+            <p>Handles order lifecycle with two main endpoints:</p>
+            <p><strong>1. Create Order:</strong> <code>POST /order</code></p>
+            <p><strong>2. Get Order Status:</strong> <code>GET /order/{order_id}</code></p>
+            <p><strong>Flow:</strong></p>
+            <ul>
+              <li>Validate request payload</li>
+              <li>Calculate / verify total</li>
+              <li>Store order in MongoDB</li>
+              <li>Generate unique order ID</li>
+              <li>Return confirmation response</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h3>Payment Service</h3>
+            <p><strong>Status:</strong> Planned</p>
+            <p>The structure is already prepared for future payment integration, enabling:</p>
+            <ul>
+              <li>Online payment processing</li>
+              <li>Payment status tracking</li>
+              <li>Refund handling</li>
+            </ul>
+            <p>This shows forward-thinking modular design.</p>
+          </div>
+        </div>
+
+        <h2>Sample API Request</h2>
+
+        <p>Here's an example of creating an order:</p>
+
+        <div class="code-block">
+<span class="code-comment">// POST /order</span>
+{
+  <span class="code-key">"table_number"</span>: <span class="code-number">3</span>,
+  <span class="code-key">"customer_id"</span>: <span class="code-string">"abc@gmail.com"</span>,
+  <span class="code-key">"cart"</span>: [
+    { 
+      <span class="code-key">"menu_id"</span>: <span class="code-number">101</span>, 
+      <span class="code-key">"quantity"</span>: <span class="code-number">2</span>, 
+      <span class="code-key">"cost"</span>: <span class="code-number">240</span> 
+    },
+    { 
+      <span class="code-key">"menu_id"</span>: <span class="code-number">102</span>, 
+      <span class="code-key">"quantity"</span>: <span class="code-number">1</span>, 
+      <span class="code-key">"cost"</span>: <span class="code-number">60</span> 
+    }
+  ],
+  <span class="code-key">"total"</span>: <span class="code-number">300</span>
+}
+        </div>
+
+        <h2>Database Design (MongoDB)</h2>
+
+        <div class="highlight-box">
+          <h3>Why MongoDB?</h3>
+          <ul>
+            <li><strong>Flexible schema</strong> for evolving restaurant data</li>
+            <li><strong>Easy cloud deployment</strong> with MongoDB Atlas</li>
+            <li><strong>Native JSON compatibility</strong> with REST APIs</li>
+          </ul>
+        </div>
+
+        <p>Typical collections:</p>
+        <ul>
+          <li><code>menus</code></li>
+          <li><code>orders</code></li>
+          <li><code>payments</code> (future)</li>
+        </ul>
+
+        <h2>High-Level Architecture Flow</h2>
+
+        <div class="architecture-flow">
+          <pre>
+            +-------------------+
+            |   Client / POS /  |
+            |   Mobile App      |
+            +---------+---------+
+                      |
+                      | HTTP REST
+                      v
+            +-------------------+
+            |   Golang Server   |
+            |   (main.go)       |
+            +---------+---------+
+                      |
+          +-----------+-----------+
+          |                       |
+          v                       v
+  +---------------+      +----------------+
+  |   Menu API    |      |   Order API    |
+  | handler/service|     | handler/service|
+  +-------+-------+      +--------+-------+
+          |                       |
+          +-----------+-----------+
+                      |
+                      v
+               +-------------+
+               |  MongoDB    |
+               | Local/Cloud |
+               +-------------+
+          </pre>
+        </div>
+
+        <h2>Request Flow Example (Create Order)</h2>
+
+        <div class="code-block">
+Client → POST /order
+      → Router
+      → Order Handler
+      → Order Service (business logic)
+      → MongoDB (store order)
+      → Response with Order ID
+      → Client displays confirmation
+        </div>
+
+        <h2>Design Principles Used</h2>
+
+        <ul>
+          <li><strong>Separation of Concerns</strong> – Clear boundaries between layers</li>
+          <li><strong>Modular microservice-ready structure</strong> – Easy to split into microservices</li>
+          <li><strong>Scalable database choice</strong> – MongoDB supports horizontal scaling</li>
+          <li><strong>Clean REST API design</strong> – RESTful conventions followed</li>
+          <li><strong>Future-ready payment integration</strong> – Prepared for extensibility</li>
+        </ul>
+
+        <h2>API Testing with Postman</h2>
+
+        <p>A ready-to-use Postman collection is included, allowing:</p>
+
+        <ul>
+          <li>Quick local testing</li>
+          <li>Easy sharing with frontend/mobile teams</li>
+          <li>Faster debugging</li>
+        </ul>
+
+        <h2>Future Enhancements</h2>
+
+        <div class="highlight-box">
+          <h3>Planned Features</h3>
+          <ul>
+            <li><strong>JWT Authentication</strong> – Secure API access</li>
+            <li><strong>Role-based access</strong> (Admin / Staff / Customer)</li>
+            <li><strong>Payment gateway integration</strong> (Stripe/Razorpay)</li>
+            <li><strong>Order status workflow</strong> (Preparing → Ready → Served)</li>
+            <li><strong>Docker & Kubernetes deployment</strong> – Container orchestration</li>
+            <li><strong>Observability</strong> (logs, metrics, tracing)</li>
+          </ul>
+        </div>
+
+        <h2>Why I Built This</h2>
+
+        <p>This project demonstrates several key technical competencies:</p>
+
+        <ul>
+          <li><strong>Golang proficiency</strong> – Building production-grade services</li>
+          <li><strong>Clean architecture</strong> – Maintainable and testable code</li>
+          <li><strong>REST API design</strong> – Industry-standard practices</li>
+          <li><strong>MongoDB integration</strong> – NoSQL database expertise</li>
+          <li><strong>Microservice patterns</strong> – Preparing for distributed systems</li>
+        </ul>
+
+        <p>More importantly, it's a practical foundation that can evolve into a full-featured restaurant management platform.</p>
+
+        <hr>
+
+        <p><em>Interested in discussing backend architecture or microservices? Feel free to <a href="../../index.html#contact">reach out</a> — I'd be happy to share insights from this project.</em></p>
+
+      </article>
+
+      <!-- Post Footer -->
+      <div class="blog-post-footer fade-in">
+        <div class="blog-post-tags">
+          <span>Tags:</span>
+          <span class="skill-tag">Golang</span>
+          <span class="skill-tag">Microservices</span>
+          <span class="skill-tag">REST API</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Backend Development</span>
+          <span class="skill-tag">Clean Architecture</span>
+          <span class="skill-tag">Postman</span>
+        </div>
+
+        <div class="blog-post-nav">
+          <a href="../../index.html#blog">← Back to Blog</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-text">
+        © 2026 Arumugam Maharaja. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/arumugam-maharaja/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/arumugam-maharaja" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="../../index.html#blog">Blog</a>
+        <a href="mailto:arumugam.maharaja@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <!-- Scripts -->
+  <script src="../../assets/js/smooth-scroll.js"></script>
+  <script src="../../assets/js/main.js"></script>
+
+</body>
+</html>
