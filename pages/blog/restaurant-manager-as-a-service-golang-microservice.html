@@ -277,28 +277,6 @@
 
         <p>The project follows a <strong>clean layered architecture</strong>:</p>
 
-        <div class="folder-structure">
-<span class="folder">RMaaS/</span>
-├── <span class="folder">api/</span>                    <span class="code-comment"># Postman collection for testing</span>
-├── <span class="folder">db/</span>                     <span class="code-comment"># MongoDB connection setup</span>
-├── <span class="folder">domain/</span>                 <span class="code-comment"># Core business entities</span>
-│   ├── <span class="file">menu.go</span>
-│   ├── <span class="file">order.go</span>
-│   ├── <span class="file">payment.go</span>
-│   └── <span class="file">error.go</span>
-├── <span class="folder">endpoints/</span>              <span class="code-comment"># Service & Handler layers</span>
-│   ├── <span class="folder">menu/</span>
-│   │   ├── <span class="file">handler.go</span>        <span class="code-comment"># HTTP request/response handling</span>
-│   │   └── <span class="file">service.go</span>        <span class="code-comment"># Business logic</span>
-│   ├── <span class="folder">orders/</span>
-│   │   ├── <span class="file">handler.go</span>
-│   │   └── <span class="file">service.go</span>
-│   └── <span class="folder">payment/</span>
-│       ├── <span class="file">handler.go</span>
-│       └── <span class="file">service.go</span>
-├── <span class="folder">routes/</span>                 <span class="code-comment"># API endpoint registration</span>
-└── <span class="file">main.go</span>                   <span class="code-comment"># Application entry point</span>
-        </div>
 
         <h3>1. API Layer</h3>
         <ul>
