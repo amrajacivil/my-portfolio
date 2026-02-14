@@ -53,6 +53,10 @@
     grid-template-columns: 1fr;
   }
 
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+
   .contact-wrapper {
     grid-template-columns: 1fr;
   }

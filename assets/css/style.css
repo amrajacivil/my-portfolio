@@ -1276,6 +1276,12 @@ img {
 }
 
 /* Cert Cards */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .cert-card {
   display: flex;
   align-items: center;
@@ -1286,6 +1292,10 @@ img {
   border-radius: var(--radius-md);
   margin-bottom: 12px;
   transition: var(--transition);
+}
+
+.cert-grid .cert-card {
+  margin-bottom: 0;
 }
 
 .cert-card:hover {
