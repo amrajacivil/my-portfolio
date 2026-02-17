@@ -64,6 +64,20 @@
   .projects-grid {
     grid-template-columns: 1fr;
   }
+
+  .projects-slide {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+
+  .projects-slide {
+    padding: 0 50px;
+  }
 }
 
 /* ---- Mobile ---- */
@@ -183,6 +197,21 @@
     text-align: center;
   }
 
+  .projects-slide {
+    grid-template-columns: 1fr;
+    padding: 0 40px;
+  }
+
+  .projects-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+
+  .projects-indicators {
+    display: flex;
+  }
+
   .blog-grid {
     grid-template-columns: 1fr;
   }
@@ -223,6 +252,17 @@
 
   .htimeline-year-label {
     font-size: 0.7rem;
+  }
+
+  .projects-slide {
+    padding: 0 30px;
+    gap: 16px;
+  }
+
+  .projects-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
 }
 

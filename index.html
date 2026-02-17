@@ -357,85 +357,112 @@
         <p class="section-subtitle">Highlights from my professional and personal projects.</p>
       </div>
 
-      <div class="projects-grid" style="margin-top: 40px;">
-        <div class="project-card fade-in">
-          <div class="project-card-header">
-            <div class="project-icon">🔗</div>
-            <div class="project-links">
-              <a href="pages/blog/unlocking-relationships-in-oil-gas-data-with-graph-databases.html" title="Read Case Study" aria-label="Read case study">📄</a>
+      <!-- Projects Slider Wrapper -->
+      <div class="projects-slider-wrapper" style="margin-top: 40px;">
+        <!-- Navigation Arrows -->
+        <button class="projects-nav projects-nav-prev" aria-label="Previous projects">‹</button>
+        <button class="projects-nav projects-nav-next" aria-label="Next projects">›</button>
+
+        <!-- Projects Slides Container -->
+        <div class="projects-slides-container">
+          <div class="projects-slides-track">
+            <!-- Slide 1: First 4 cards -->
+            <div class="projects-slide">
+              <div class="project-card fade-in">
+                <div class="project-card-header">
+                  <div class="project-icon">🔗</div>
+                  <div class="project-links">
+                    <a href="pages/blog/unlocking-relationships-in-oil-gas-data-with-graph-databases.html" title="Read Case Study" aria-label="Read case study">📄</a>
+                  </div>
+                </div>
+                <h3>Graph Database for Oil & Gas Data</h3>
+                <p>Designed and implemented a Neo4j-based graph database solution to unlock complex relationships in oil & gas datasets. Enabled real-time querying of asset hierarchies, equipment relationships, and maintenance histories.</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Neo4j</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">Oil and Gas</span>
+                </div>
+              </div>
+
+              <div class="project-card fade-in fade-in-delay-1">
+                <div class="project-card-header">
+                  <div class="project-icon">🔓</div>
+                  <div class="project-links">
+                    <a href="https://pypi.org/user/amraja/" title="Open PyPI" aria-label="Open PyPI">📄</a>
+                  </div>
+                </div>
+                <h3>Python libraries (Open Source)</h3>
+                <p>Developed and published open-source Python modules to solve practical challenges I encounter in daily life. Primary live release is taxcalcindia, a module specifically designed to calculate tax based on Indian taxation rules.</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">Open Source</span>
+                  <span class="skill-tag">PyPI</span>
+                </div>
+              </div>
+              
+              <div class="project-card fade-in fade-in-delay-2">
+                <div class="project-card-header">
+                  <div class="project-icon">📱</div>
+                  <div class="project-links">
+                    <a href="https://play.google.com/store/apps/dev?id=6321164405815676034&hl=en_US" title="Open Play Store" aria-label="Open Play Store">📄</a>
+                  </div>
+                </div>
+                <h3>Mobile Apps (Deprecated)</h3>
+                <p>Built some mobile apps related to mathematical calculations, visa guidelines, and quizzes in my early career out of curiosity using Flutter and Java, and deployed them on the Play Store and App Store. However, most of my apps are now deprecated as I don't have time to update the libraries. Hopefully, I will take it up again in the future</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Android</span>
+                  <span class="skill-tag">Java</span>
+                  <span class="skill-tag">Flutter</span>
+                </div>
+              </div>
+
+              <div class="project-card fade-in fade-in-delay-3">
+                <div class="project-card-header">
+                  <div class="project-icon">🍽️</div>
+                  <div class="project-links">
+                    <a href="pages/blog/restaurant-manager-as-a-service-golang-microservice.html" title="Read Blog Post" aria-label="Read blog post" target="_blank" rel="noopener noreferrer">📄</a>
+                  </div>
+                </div>
+                <h3>Restaurant Manager as a Service (RMaaS)</h3>
+                <p>Built a lightweight backend service in Golang exposing REST APIs for menu management, order creation & tracking, and MongoDB persistence. Features clean layered architecture with separation of concerns, making it modular and microservice-ready.</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Golang</span>
+                  <span class="skill-tag">Microservices</span>
+                  <span class="skill-tag">REST API</span>
+                  <span class="skill-tag">MongoDB</span>
+                  <span class="skill-tag">Clean Architecture</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <h3>Graph Database for Oil & Gas Data</h3>
-          <p>Designed and implemented a Neo4j-based graph database solution to unlock complex relationships in oil & gas datasets. Enabled real-time querying of asset hierarchies, equipment relationships, and maintenance histories.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Neo4j</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Oil and Gas</span>
+
+            <!-- <div class="projects-slide">
+              <div class="project-card fade-in">
+                <div class="project-card-header">
+                  <div class="project-icon">🔗</div>
+                  <div class="project-links">
+                    <a href="pages/blog/unlocking-relationships-in-oil-gas-data-with-graph-databases.html" title="Read Case Study" aria-label="Read case study">📄</a>
+                  </div>
+                </div>
+                <h3>Graph Database for Oil & Gas Data</h3>
+                <p>Designed and implemented a Neo4j-based graph database solution to unlock complex relationships in oil & gas datasets. Enabled real-time querying of asset hierarchies, equipment relationships, and maintenance histories.</p>
+                <div class="skill-tags">
+                  <span class="skill-tag">Neo4j</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">Oil and Gas</span>
+                </div>
+              </div>
+
+              
+            </div> -->
+
+            <!-- Add more slides here as needed -->
           </div>
         </div>
 
-        <div class="project-card fade-in fade-in-delay-1">
-          <div class="project-card-header">
-            <div class="project-icon">🔓</div>
-            <div class="project-links">
-              <a href="https://pypi.org/user/amraja/" title="Open PyPI" aria-label="Open PyPI">📄</a>
-            </div>
-          </div>
-          <h3>Python libraries (Open Source)</h3>
-          <p>Developed and published open-source Python modules to solve practical challenges I encounter in daily life. Primary live release is taxcalcindia, a module specifically designed to calculate tax based on Indian taxation rules.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Open Source</span>
-            <span class="skill-tag">PyPI</span>
-          </div>
+        <!-- Slide indicators (mobile) -->
+        <div class="projects-indicators">
+          <button class="projects-indicator active" data-index="0" aria-label="Projects slide 1"></button>
         </div>
-        
-        <div class="project-card fade-in fade-in-delay-2">
-          <div class="project-card-header">
-            <div class="project-icon">📱</div>
-            <div class="project-links">
-              <a href="https://play.google.com/store/apps/dev?id=6321164405815676034&hl=en_US" title="Open Play Store" aria-label="Open Play Store">📄</a>
-            </div>
-          </div>
-          <h3>Mobile Apps (Deprecated)</h3>
-          <p>Built some mobile apps related to mathematical calculations, visa guidelines, and quizzes in my early career out of curiosity using Flutter and Java, and deployed them on the Play Store and App Store. However, most of my apps are now deprecated as I don’t have time to update the libraries. Hopefully, I will take it up again in the future </p>
-          <div class="skill-tags">
-            <span class="skill-tag">Android</span>
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">Flutter</span>
-          </div>
-        </div>
-                <div class="project-card fade-in fade-in-delay-3">
-          <div class="project-card-header">
-            <div class="project-icon">🍽️</div>
-            <div class="project-links">
-              <a href="pages/blog/restaurant-manager-as-a-service-golang-microservice.html" title="Read Blog Post" aria-label="Read blog post" target="_blank" rel="noopener noreferrer">📄</a>
-            </div>
-          </div>
-          <h3>Restaurant Manager as a Service (RMaaS)</h3>
-          <p>Built a lightweight backend service in Golang exposing REST APIs for menu management, order creation & tracking, and MongoDB persistence. Features clean layered architecture with separation of concerns, making it modular and microservice-ready.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Golang</span>
-            <span class="skill-tag">Microservices</span>
-            <span class="skill-tag">REST API</span>
-            <span class="skill-tag">MongoDB</span>
-            <span class="skill-tag">Clean Architecture</span>
-          </div>
-        </div>
-                <!-- 
-        <div class="project-card fade-in fade-in-delay-3">
-          <div class="project-card-header">
-            <div class="project-icon">☁️</div>
-          </div>
-          <h3>Cloud-Native Microservices Platform</h3>
-          <p>Designed and built a microservices platform on AWS using Kubernetes, implementing service mesh, distributed tracing, and automated scaling for enterprise applications.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">AWS</span>
-            <span class="skill-tag">Kubernetes</span>
-            <span class="skill-tag">Terraform</span>
-            <span class="skill-tag">Go</span>
-          </div>
-        </div> -->
       </div>
     </div>
   </section>
@@ -874,6 +901,7 @@
   <!-- Scripts -->
   <script src="assets/js/smooth-scroll.js"></script>
   <script src="assets/js/timeline.js"></script>
+  <script src="assets/js/projects-slider.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>
