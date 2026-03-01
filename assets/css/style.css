@@ -1741,7 +1741,7 @@ img {
 }
 
 /* ========================================
-   LIFE EVENTS PAGE
+   LIFE EVENTS PAGE - HORIZONTAL TIMELINE
    ======================================== */
 .page-main {
   padding-top: 120px;
@@ -1764,115 +1764,132 @@ img {
 .life-timeline-horizontal {
   position: relative;
   margin-top: 56px;
-  padding: 0 56px;
+  overflow: hidden;
 }
 
-.life-events-viewport {
+.life-carousel-viewport {
   overflow: hidden;
   position: relative;
   border-radius: var(--radius-lg);
+  background: linear-gradient(to right, var(--bg-primary) 0%, transparent 10%, transparent 90%, var(--bg-primary) 100%);
+  padding: 20px 0;
 }
 
-.life-events-track {
+.life-carousel-track {
   display: flex;
-  align-items: stretch;
-  gap: 20px;
-  padding: 20px 8px;
+  gap: 24px;
+  padding: 10px 24px;
   width: max-content;
+  animation: lifelineScroll 60s linear infinite;
 }
 
-.life-event-card {
+@keyframes lifelineScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+.life-carousel-viewport:hover .life-carousel-track {
+  animation-play-state: paused;
+}
+
+.life-milestone-card {
   position: relative;
-  width: 320px;
-  flex: 0 0 320px;
-  min-height: 240px;
-  padding: 22px;
+  min-width: 280px;
+  width: 280px;
+  flex: 0 0 280px;
+  padding: 24px;
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
   overflow: hidden;
 }
 
-.life-event-card:hover {
-  border-color: var(--accent-primary);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-6px) scale(1.01);
-}
-
-.life-event-card::before {
+.life-milestone-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(145deg, rgba(230, 168, 23, 0.08), transparent 42%);
+  background: linear-gradient(135deg, rgba(230, 168, 23, 0.05), transparent);
   pointer-events: none;
 }
 
-.life-event-icon {
-  width: 48px;
-  height: 48px;
+.life-milestone-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px) scale(1.02);
+}
+
+.milestone-phase-icon {
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   margin-bottom: 14px;
   background: var(--accent-light);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 0 0 0 rgba(230, 168, 23, 0.3);
-  animation: lifePulse 2.4s ease-in-out infinite;
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 4px 16px rgba(230, 168, 23, 0.15);
+  animation: iconFloat 3s ease-in-out infinite;
 }
 
-@keyframes lifePulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(230, 168, 23, 0.3);
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
   }
-  70% {
-    transform: scale(1.06);
-    box-shadow: 0 0 0 10px rgba(230, 168, 23, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(230, 168, 23, 0);
+  50% {
+    transform: translateY(-6px);
   }
 }
 
-.life-event-year {
+.life-milestone-card[data-phase="birth"] .milestone-phase-icon { animation-delay: 0s; }
+.life-milestone-card[data-phase="childhood"] .milestone-phase-icon { animation-delay: 0.2s; }
+.life-milestone-card[data-phase="education"] .milestone-phase-icon { animation-delay: 0.4s; }
+.life-milestone-card[data-phase="early-career"] .milestone-phase-icon { animation-delay: 0.6s; }
+.life-milestone-card[data-phase="professional"] .milestone-phase-icon { animation-delay: 0.8s; }
+.life-milestone-card[data-phase="personal"] .milestone-phase-icon { animation-delay: 1s; }
+
+.milestone-year {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 12px;
-  margin-bottom: 12px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--accent-primary);
+  padding: 5px 14px;
   background: var(--accent-light);
-  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
   border-radius: 999px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
 }
 
-.life-event-card h3 {
-  font-size: 1.08rem;
+.life-milestone-card h3 {
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 8px;
+  text-transform: capitalize;
 }
 
-.life-event-card p {
-  font-size: 0.92rem;
-  line-height: 1.7;
+.life-milestone-card p {
+  font-size: 0.85rem;
   color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }
 
 .life-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
-  width: 42px;
-  height: 42px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
@@ -1884,13 +1901,14 @@ img {
   justify-content: center;
   cursor: pointer;
   box-shadow: var(--shadow-md);
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .life-nav:hover {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: #fff;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .life-nav-prev {
@@ -1901,36 +1919,85 @@ img {
   right: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .life-milestone-card {
+    min-width: 240px;
+    width: 240px;
+    flex-basis: 240px;
+  }
+
+  .life-carousel-track {
+    gap: 16px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 768px) {
   .life-timeline-horizontal {
     margin-top: 40px;
-    padding: 0 44px;
   }
 
-  .life-events-track {
-    gap: 16px;
+  .life-carousel-viewport {
+    border-radius: var(--radius-md);
+    padding: 16px 0;
   }
 
-  .life-event-card {
-    width: 285px;
-    flex-basis: 285px;
-    min-height: 230px;
+  .life-milestone-card {
+    min-width: 220px;
+    width: 220px;
+    flex-basis: 220px;
+    padding: 16px;
+  }
+
+  .milestone-phase-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+
+  .life-milestone-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .life-milestone-card p {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 640px) {
-  .life-timeline-horizontal {
-    padding: 0;
-  }
-
   .life-nav {
-    display: none;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
   }
 
-  .life-event-card {
-    width: 260px;
-    flex-basis: 260px;
-    min-height: 220px;
+  .life-milestone-card {
+    min-width: 200px;
+    width: 200px;
+    flex-basis: 200px;
+    padding: 14px;
+  }
+
+  .milestone-phase-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .life-milestone-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .life-milestone-card p {
+    font-size: 0.75rem;
+  }
+
+  .milestone-year {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    margin-bottom: 8px;
   }
 }
 
