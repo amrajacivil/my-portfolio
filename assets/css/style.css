@@ -445,6 +445,49 @@ img {
   transform: translateY(-2px);
 }
 
+.btn-resume {
+  background: rgba(230, 168, 23, 0.1);
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+  padding: 14px 20px;
+  position: relative;
+}
+
+.btn-resume::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.btn-resume:hover::after {
+  opacity: 1;
+}
+
+.btn-resume:hover {
+  background: var(--accent-gradient);
+  color: #fff;
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(230, 168, 23, 0.3);
+}
+
+.resume-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
 /* Hero Image */
 .hero-image {
   position: relative;
