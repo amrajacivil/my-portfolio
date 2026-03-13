@@ -63,6 +63,77 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => observer.observe(el));
   }
 
+  // Hero Stat Number Counter
+  const statNumbers = document.querySelectorAll('.hero-stats .stat-number');
+
+  if (statNumbers.length > 0) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animateCounter = (el, duration = 2600) => {
+      const rawText = (el.textContent || '').trim();
+      const match = rawText.match(/^(\d+(?:\.\d+)?)(.*)$/);
+
+      if (!match) return;
+
+      const target = Number.parseFloat(match[1]);
+      const suffix = match[2] || '';
+
+      if (!Number.isFinite(target)) return;
+
+      if (prefersReducedMotion) {
+        el.textContent = `${target}${suffix}`;
+        return;
+      }
+
+      const start = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.floor(eased * target);
+
+        el.textContent = `${currentValue}${suffix}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = `${target}${suffix}`;
+        }
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    const statsContainer = document.querySelector('.hero-stats');
+    let hasAnimatedStats = false;
+
+    const runStatsAnimation = () => {
+      if (hasAnimatedStats) return;
+      hasAnimatedStats = true;
+      statNumbers.forEach(stat => animateCounter(stat));
+    };
+
+    if (statsContainer && 'IntersectionObserver' in window) {
+      const statsObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              runStatsAnimation();
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.4
+        }
+      );
+
+      statsObserver.observe(statsContainer);
+    } else {
+      runStatsAnimation();
+    }
+  }
+
   // Active Navigation Link Highlight
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav a[href^="#"]');
